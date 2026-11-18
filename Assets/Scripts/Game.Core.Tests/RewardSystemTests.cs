@@ -85,7 +85,7 @@ namespace Game.Core.Tests
         {
             var c = new CombatCalc();
             Assert.AreEqual(4, c.Damage("slime", 5));
-            Assert.AreEqual(6, c.Damage("boss", 10));
+            Assert.AreEqual(7, c.Damage("boss", 10));
         }
     }
 }

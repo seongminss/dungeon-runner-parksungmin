@@ -8,27 +8,29 @@ namespace Game.Unity
     /// Game.Core가 엔진 없이도, 엔진 안에서도 같은 결과를 낸다는 것을 보여 주는 최소 데모.
     public class DemoRunner : MonoBehaviour
     {
-        int t = 100, c = 3, b = 1;
+        int clearTime = 100, coin = 3, bossKillCount = 1;
         bool isEvent;
-        readonly RewardSystem reward = new RewardSystem();
+        string lastGrade = "";
+        readonly RewardSystem rewardSystem = new RewardSystem();
 
         void OnGUI()
         {
             GUILayout.BeginArea(new Rect(10, 10, 340, 260), GUI.skin.box);
             GUILayout.Label("던전 러너 레거시 — 보상 정산 데모");
-            GUILayout.Label($"클리어 시간 t = {t}s");
-            t = (int)GUILayout.HorizontalSlider(t, 0, 180);
-            GUILayout.Label($"코인 c = {c}");
-            c = (int)GUILayout.HorizontalSlider(c, 0, 20);
-            GUILayout.Label($"보스 b = {b}");
-            b = (int)GUILayout.HorizontalSlider(b, 0, 3);
+            GUILayout.Label($"클리어 시간 clearTime = {clearTime}s");
+            clearTime = (int)GUILayout.HorizontalSlider(clearTime, 0, 180);
+            GUILayout.Label($"코인 coin = {coin}");
+            coin = (int)GUILayout.HorizontalSlider(coin, 0, 20);
+            GUILayout.Label($"보스 bossKillCount = {bossKillCount}");
+            bossKillCount = (int)GUILayout.HorizontalSlider(bossKillCount, 0, 3);
             isEvent = GUILayout.Toggle(isEvent, " 이벤트 기간");
-            if (GUILayout.Button("정산 (Proc)"))
+            if (GUILayout.Button("정산 (ApplyStageReward)"))
             {
-                int r = reward.ApplyStageReward(t, c, b, isEvent, diff: 1);
-                Debug.Log($"보상 {r}, 등급 {reward.grade}");
+                int reward = rewardSystem.ApplyStageReward(clearTime, coin, bossKillCount, isEvent, diff: 1);
+                lastGrade = rewardSystem.JudgeGrade(clearTime);
+                Debug.Log($"보상 {reward}, 등급 {lastGrade}");
             }
-            GUILayout.Label($"최근: {reward.lastR} / 등급 {reward.grade}");
+            GUILayout.Label($"최근: {rewardSystem.lastReward} / 등급 {lastGrade}");
             GUILayout.EndArea();
         }
     }

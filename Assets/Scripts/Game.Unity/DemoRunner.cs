@@ -25,7 +25,7 @@ namespace Game.Unity
             isEvent = GUILayout.Toggle(isEvent, " 이벤트 기간");
             if (GUILayout.Button("정산 (Proc)"))
             {
-                int r = reward.Proc(t, c, b, isEvent, diff: 1);
+                int r = reward.ApplyStageReward(t, c, b, isEvent, diff: 1);
                 Debug.Log($"보상 {r}, 등급 {reward.grade}");
             }
             GUILayout.Label($"최근: {reward.lastR} / 등급 {reward.grade}");

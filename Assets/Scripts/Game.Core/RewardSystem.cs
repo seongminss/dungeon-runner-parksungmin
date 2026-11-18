@@ -9,7 +9,7 @@ namespace Game.Core
         public int lastR;      // 최근 보상액
 
         // t: 클리어 시간(초), c: 코인 수, b: 보스 처치 수, diff: 난이도(1~3)
-        public int Proc(int t, int c, int b, bool isEvent, int diff)
+        public int ApplyStageReward(int t, int c, int b, bool isEvent, int diff)
         {
             // --- 보상 계산 ---
             int r = c * 10 + b * 50;
